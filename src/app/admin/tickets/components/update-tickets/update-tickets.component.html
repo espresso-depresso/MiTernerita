@@ -1,0 +1,27 @@
+<div class="container">
+    <form [formGroup]="updateTicketForm" (ngSubmit)="onSubmit()">
+        <div class="formGroup">
+            <label for="Nombre">Nombre</label>
+            <input pInputText id="Nombre" formControlName="name" type="text" />
+        </div>
+
+        <div class="formGroup">
+            <label for="Precio">Precio</label>
+            <input pInputText id="Precio" formControlName="price" type="number" />
+        </div>
+
+      <div class="formGroup">
+            <label for="Estado">Seleccionar Evento</label>
+            <p-select [options]="events" [(ngModel)]="selectedEvent" optionLabel="name" optionValue="idEvents" formControlName="idEvents" appendTo="body"/>
+        </div>
+
+        <div class="formGroup">
+            <label for="Estado">Estado</label>
+            <p-select [options]="status" [(ngModel)]="selectedStatus" optionLabel="label" optionValue="value" formControlName="status" appendTo="body"/>
+        </div>
+
+        <div class="btnContainer">
+            <button class="btn" pButton type="submit" label="Actualizar" [disabled]="updateTicketForm.invalid"></button>
+        </div>
+    </form>
+</div>

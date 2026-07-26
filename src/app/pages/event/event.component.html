@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="sections">
+    <p>Detalles del evento ></p> 
+    <p  class="selected">Espacios ></p> 
+    <p>Consumo ></p> 
+    <p>Confirmar datos ></p> 
+    <p>Pagar</p>
+</div>
+
+<div class="content">
+  <div class="details">
+    <div class="title">
+      <h1>{{ name }}</h1>
+    </div>
+
+    <div class="date">
+      <p><i class="pi pi-calendar"></i> {{ date }}</p>
+      <p><i class="pi pi-clock"></i> {{ time }}</p>
+    </div>
+
+    <div class="description">
+      <p [innerHTML]="description"></p>
+    </div>
+
+    <div class="btnDetails">
+      <button type="button" class="event" (click)="goToEventTicket(idEvents)">Reservar</button>
+    </div>
+  </div>
+</div>
+</div>

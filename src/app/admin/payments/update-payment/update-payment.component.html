@@ -1,0 +1,77 @@
+<div class="container">
+    <form [formGroup]="updatePaymentForm" (ngSubmit)="onSubmit()">
+        <div class="formGroup2">
+            <div class="formGroupItem">
+                <label for="Nombre">Nombre</label>
+                <input pInputText readonly id="Nombre" type="text" [value]="name" />
+            </div>
+
+            <div class="formGroupItem">
+                <label for="lastName">Apellido</label>
+                <input pInputText readonly id="lastName" type="text" [value]="lastName" />
+            </div>
+            
+            <div class="formGroupItem">
+                <label for="cedula">Cedula</label>
+                <input pInputText readonly id="cedula" type="text" [value]="cedula" />
+            </div>
+        </div>
+
+        <div class="formGroup2">
+            <div class="formGroupItem">
+                <label for="event">Evento</label>
+                <input pInputText readonly id="event" type="text" [value]="event" />
+            </div>
+
+             <div class="formGroupItem">
+                <label for="date">Fecha</label>
+                <input pInputText readonly id="date" type="text" [value]="date | date:'shortDate'" />
+            </div>
+        </div>
+
+        <div class="formGroup2">
+            <div class="formGroupItem">
+                <label for="idPaymentDetails">No. Documento</label>
+                <input pInputText readonly id="idPaymentDetails" type="text" [value]="noDocumento" />
+            </div>
+
+            <div class="formGroupItem">
+                <label for="cantidad">Cantidad de entradas</label>
+                <input pInputText readonly id="cantidad" type="text" [value]="cantidad" />
+            </div>
+
+            <div class="formGroupItem">
+                <label for="total">Total</label>
+                <input pInputText readonly id="total" type="text" [value]="total + ' $' +' / ' + totalBs + ' Bs'" />
+            </div>
+        </div>
+
+        <div class="formGroup2">
+            <div class="formGroupItem">
+                <label for="banco">Banco</label>
+                <input pInputText readonly id="banco" type="text" [value]="banco" />
+            </div>
+
+            <div class="formGroupItem">
+                <label for="referencia">Referencia</label>
+                <input pInputText readonly id="referencia" type="text" [value]="referencia" />
+            </div>
+        </div>
+
+        <div class="formGroup">
+            <label for="Estado">Estado</label>
+            <p-select [options]="status"  optionLabel="label" optionValue="value" formControlName="status"  appendTo="body"/>
+        </div>
+
+        <div class="image">
+            <img
+                [src]=" (apiImg + '/img/' + (payment.comprobante || payment.imagen))"
+                alt="Vista previa"
+                class="preview" />
+        </div>
+
+        <div class="btnContainer">
+            <button class="btn" pButton type="submit" label="Actualizar" ></button>
+        </div>
+    </form>
+</div>

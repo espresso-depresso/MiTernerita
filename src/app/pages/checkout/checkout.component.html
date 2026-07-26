@@ -1,0 +1,85 @@
+<div class="container">
+    <div class="sections">
+    <p>Detalles del evento ></p> 
+    <p>Espacios ></p> 
+    <p  class="selected">Confimar datos ></p> 
+    <p>Pagar</p>
+</div>
+
+<div class="content">
+    <div class="details">
+        <div class="title">
+        <h1>{{ name }}</h1>
+        </div>
+
+        <!-- <div class="date">
+        <p><i class="pi pi-calendar"></i> 15 de marzo</p>
+        <p><i class="pi pi-clock"></i> 10:00 PM</p>
+        </div> -->
+
+        <div class="title">
+            <h3>Información personal</h3>
+        </div>
+
+        <form [formGroup]="userData" (ngSubmit)="proceedToPayment()">
+            <div class="name">
+                <div class="inputGroup">
+                    <label for="name">Nombre</label>
+                    <input type="text" id="name" name="name" formControlName="name" />
+                </div>
+
+                <div class="inputGroup">
+                    <label for="name">Apellido</label>
+                    <input type="text" id="name" name="name" formControlName="lastName" />
+                </div>
+            </div>
+
+            <div class="inputGroup">
+                <label for="email">Cédula</label>
+                <input type="email" id="email" name="email" formControlName="identification" />
+            </div>
+
+            <div class="inputGroup">
+                <label for="email">Teléfono</label>
+                <input type="tel" id="telefono" name="telefono" formControlName="phone" />
+            </div>
+            
+            <div class="inputGroup">
+                <label for="email">Correo electrónico</label>
+                <input type="email" id="email" name="email" formControlName="email" />
+            </div>
+
+            <div class="btn">
+                <button class="btn2" type="submit" (click)="proceedToPayment()">Continuar</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="ticketDetails">
+
+
+        <div class="title2">
+            <h2>Detalles de compra</h2>
+        </div>
+
+        <div class="ticketInfo" *ngFor="let item of selected">
+            <!-- <h3>Detalles de espacio</h3> -->
+            <p>Tipo de espacio: <span>{{ item.name }}</span></p>
+            <p>Cantidad: <span>{{ item.cantidad }}</span></p>
+            <p>Precio: <span>${{ item.total }}</span></p>
+        </div>
+
+<!--         
+        <div class="ticketInfo">
+            <h3>Detalles de consumo</h3>
+            <p>Tipo de espacio: <span>VIP</span></p>
+            <p>Cantidad: <span>2</span></p>
+            <p>Precio: <span>$100.00</span></p>
+        </div> -->
+
+        <div class="total">
+            <h3>Total a pagar: <span>${{ total }}</span></h3>
+        </div>
+    </div>
+</div>
+</div>

@@ -1,0 +1,135 @@
+import { Component, inject, OnInit } from '@angular/core';
+import { EventsService } from '../../@core/services/events.service';
+import { CommonModule, DatePipe } from '@angular/common';
+import { TableModule } from 'primeng/table';
+import { Observable, startWith, switchMap } from 'rxjs';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { CreateEventsComponent } from './components/create-events/create-events.component';
+import { UpdateEventsComponent } from './components/update-events/update-events.component';
+import { Event } from '../../@core/models/event.model';
+import { InputText } from 'primeng/inputtext';
+import { CheckboxModule } from 'primeng/checkbox';
+import { MessageService } from 'primeng/api';
+import { ConfirmDeleteModalComponent } from '../../shared/components/confirm-delete-modal/confirm-delete-modal.component';
+import { FormsModule } from '@angular/forms';
+
+@Component({
+  selector: 'app-events',
+  imports: [
+    CommonModule,
+    TableModule,
+    InputText,
+    CheckboxModule,
+    FormsModule
+  ],
+  templateUrl: './events.component.html',
+  styleUrl: './events.component.scss'
+})
+export class EventsComponent implements OnInit{
+  private eventsService = inject(EventsService);
+  private dialogService = inject(DialogService);
+  private messageService = inject(MessageService);
+  ref: DynamicDialogRef | undefined;
+  isModalOpen = false;
+  events$!: Observable<Event[]>;
+  selectAll = false;
+  selectedEvents: Event[] = [];
+  
+   consumo = [
+    { label: 'Sí', value: 1 },
+    { label: 'No', value: 0 }
+  ];
+
+
+  ngOnInit(): void {
+    this.events$ = this.eventsService.refreshEventsObservable$.pipe(
+      startWith(null),
+      switchMap(() => {
+        return this.eventsService.getEvents();
+      })
+    )
+
+    this.eventsService.getEvents().subscribe(res => {
+      console.log(res);
+    })
+  }
+
+  openCreateModal(){
+    this.isModalOpen = true;
+    this.ref = this.dialogService.open(CreateEventsComponent, {
+      header: 'Agregar Evento',
+      width: '50vw',
+      // height: '65vh',
+      modal: true,
+      closable: true,
+       breakpoints: {
+        '960px': '75vw',
+        '640px': '90vw'
+      },
+      styleClass: 'custom-dialog'
+    });
+    this.ref.onClose.subscribe(() => {
+      this.isModalOpen = false;
+    });
+  }
+
+  openEditModal(event: any){
+    this.isModalOpen = true;
+    this.ref = this.dialogService.open(UpdateEventsComponent, {
+      header: 'Editar Evento',
+      width: '50vw',
+      // height: '65vh',
+      modal: true,
+      closable: true,
+      data: { event },
+       breakpoints: {
+        '960px': '75vw',
+        '640px': '90vw'
+      },
+      styleClass: 'custom-dialog'
+    });
+    this.ref.onClose.subscribe(() => {
+      this.isModalOpen = false;
+    });
+  }
+
+  
+    showConfirmModal(event?: Event, selectedItems: Event[] = this.selectedEvents) {
+      const itemsToDelete = event ? [event] : selectedItems;
+    
+      this.ref = this.dialogService.open(ConfirmDeleteModalComponent, {
+        header: 'Confirmar Eliminación',
+        width: '40vw',
+        modal: true,
+        data: {
+          message: itemsToDelete.length === 1
+            ? `¿Estás seguro de que deseas eliminar ${itemsToDelete[0].name || 'este evento'}?`
+            : `¿Estás seguro de que deseas eliminar ${itemsToDelete.length} eventos?`,
+          selectedItems: itemsToDelete
+        }
+      });
+    
+      this.ref.onClose.subscribe((confirmed: boolean) => {
+        if (confirmed) {
+          itemsToDelete.forEach(item => this.executeDeleteEvent(item.idEvents));
+        }
+      });
+    }
+  
+
+   private executeDeleteEvent(id: number){
+    this.eventsService.deleteEvent(id).subscribe({
+      next: () => {
+        this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Evento eliminado correctamente' });
+      },
+      error: () => {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Ocurrió un error al eliminar el evento' });
+      }
+    })
+  }
+
+   toggleSelectAll(events: Event[], checked: boolean) {
+      this.selectAll = checked;
+      this.selectedEvents = checked ? [...events] : [];
+    }
+}

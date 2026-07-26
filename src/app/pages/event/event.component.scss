@@ -1,0 +1,291 @@
+.container{
+  width: 100%;
+  min-height: auto;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: transparent;
+  overflow: hidden; // evita scroll por desbordes visuales
+}
+
+.container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+}
+
+.container > * {
+  position: relative;
+  z-index: 1;
+}
+
+.sections{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 10px;
+    margin-left: 5%;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.selected{
+    color: #1522D1;
+}
+
+.content{
+    display: flex;
+    justify-content: end;
+    align-items: start;
+    height: 100%;
+    padding-bottom: 0px;
+    margin-top: 25px;
+    flex-direction: row-reverse;
+}
+
+.details{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 24px;
+}
+
+.title{
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+    height: auto;
+}
+
+.title h1{
+    color: white;
+    font-size: 80px;
+    font-weight: 900;
+    text-align: center;
+    margin-bottom: 0px;
+    white-space: normal;
+    word-break: break-word;
+}
+
+.date{
+    // color: #b3b3b3;
+    font-size: 20px;
+    display: flex;
+    gap: 10px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.date p, i{
+    color: white;
+    font-weight: 500;
+    margin-bottom: 0px;
+}
+
+.description{
+    color: #FFFFFF;
+    text-align: left;
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    font-size: 20px;
+    width: 80%;
+}
+
+.btnDetails{
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.event {
+  background: transparent;
+  color: white;
+  border: 1px solid white;
+  padding: 10px 24px;
+  border-radius: 50px;
+  cursor: pointer;
+  margin-top: 20px;
+  width: 30%;
+  height: 5vh;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.event:hover {
+  opacity: 0.9;
+}
+
+.imagen{
+    width: 30%;
+    height: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.imgEvents{
+    width: 80%;
+}
+
+
+@media(max-width: 2560px){
+  .event{
+    height: auto;
+  }
+}
+
+@media(max-width: 1440px){
+  .eventGrid{
+    width: 100%;
+  }
+
+  .event{
+  height: auto;
+  width: 23%;
+  }
+
+  .eventImg{
+    height: 50%;
+  }
+
+  .eventInfo{
+    height: 10%;
+    width: 100%;
+    display: flex;
+  }
+
+  .eventInfo .date p{
+    font-size: 15px;
+  }
+}
+
+@media (min-width: 1366px){
+  .container{
+    /* mantener min-height para que el fondo no se colapse cuando el contenido es corto */
+    min-height: 83vh;
+  }
+
+  .details{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    height: 100%;
+    margin-top: -100px;
+  }
+
+}
+
+@media(max-width: 1024px){
+  .related{
+    width: 100%;
+  }
+
+  .eventsGrid{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .event{
+    width: 48.17%;
+  }
+
+  .date{
+    width: 100%;
+  }
+
+  .eventInfo .date p{
+    font-size: 15px;
+  }
+}
+
+@media(max-width: 768px){
+  .content{
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
+  .details{
+    width: 90%;
+    align-items: center;
+    text-align: center;
+  }
+
+  .description{
+    width: 100%;
+    font-size: 18px;
+    text-align: left;
+  }
+
+  .imagen{
+    width: 80%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .related{
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .events{
+    width: 100%;
+  }
+
+  .eventsGrid{
+    justify-content: center;
+  }
+
+  .event{
+    width: 80% !important;
+    height: auto;
+  }
+
+  .eventImg{
+    height: auto;
+  }
+
+  .eventInfo h2{
+    font-size: 25px;
+  }
+
+  .eventInfo .date p{
+    font-size: 15px;
+  }
+}
+
+@media(max-width: 425px){
+  .sections{
+    font-size: 13px;
+  }
+
+.title h1{
+    font-size: 40px;
+  }
+}
+
+@media(max-width: 375px){
+  .sections{
+    font-size: 11px;
+  }
+
+.title h1{
+    font-size: 30px;
+  }
+}
+
+@media(max-width: 320px){
+  .sections{
+    font-size: 9px;
+  }
+}
+
+
+

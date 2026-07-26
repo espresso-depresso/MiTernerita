@@ -1,0 +1,276 @@
+<div class="banner">
+  <div class="bannerInfo">
+    <div class="txt">
+      <h1>Bienvenido a miTernerita</h1>
+      <p>Tu destino para eventos, comida y diversión</p>
+      <div class="stats" *ngIf="dashboardStats$ | async as stats">
+        <div class="stat-item">
+          <i class="pi pi-users"></i>
+          <span>{{ stats.activeUsers }} usuarios activos</span>
+        </div>
+        <div class="stat-item">
+          <i class="pi pi-calendar"></i>
+          <span>{{ stats.activeEvents }} eventos próximos</span>
+        </div>
+        <div class="stat-item">
+          <i class="pi pi-shopping-cart"></i>
+          <span>{{ stats.activeTickets }} tickets vendidos</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="carousel" *ngIf="events$ | async as events">
+      <div
+        class="carousel-item"
+        *ngFor="let event of events; let i = index"
+        [class.active]="i === slideIndex()"
+        [style.backgroundImage]="'url(' + getEventImage(event) + ')'"
+      >
+        <div class="carousel-content" *ngIf="i === slideIndex()">
+          <h2>{{ event.name }}</h2>
+          <p class="event-description">{{ event.description }}</p>
+          <div class="date2">
+            <p>
+              <i class="pi pi-calendar"></i> {{ getFormattedDate(event.date) }}
+            </p>
+            <p>
+              <i class="pi pi-clock"></i> {{ formatTime(event.time) }} - {{ getTimeRemaining(event.date) }}
+            </p>
+            <p>
+              <i class="pi pi-users"></i> Capacidad: {{ event.capacity }} personas
+            </p>
+            <p>
+              <i class="pi pi-map-marker"></i> {{ event.room }}
+            </p>
+          </div>
+          <button class="btn2" (click)="goToEvent(event.idEvents)">Ver más</button>
+        </div>  
+      </div>
+      <button
+        *ngIf="events.length > 1"
+        class="carousel-control prev"
+        (click)="prevSlide()"
+      >
+        &#10094;
+      </button>
+      <button
+        *ngIf="events.length > 1"
+        class="carousel-control next"
+        (click)="nextSlide()"
+      >
+        &#10095;
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="content" id="events-section">
+  <div class="events"  #eventsGrid [style.background-image]="selectedBackground">
+    <div class="title">
+      <h1>Eventos</h1>
+    </div>
+     <div class="eventsCarousel" *ngIf="events$ | async as events">
+        <div class="card" *ngFor="let event of events; let i = index" [class.active]="i === selectedIndex" (click)="selectEvent(i)">
+        <img [src]="getEventImage(event)" [alt]="event.name">
+        <div class="info">
+          <h2>{{ event.name }}</h2>
+          <p class="event-short-description">{{ event.description | slice:0:100 }}{{ event.description.length > 100 ? '...' : '' }}</p>
+          <div class="infoDate">
+            <p>
+              <i class="pi pi-calendar"></i> {{ getFormattedDate(event.date) }}
+            </p>
+            <p>
+              <i class="pi pi-clock"></i> {{ formatTime(event.time) }}
+            </p>
+            <p>
+              <i class="pi pi-users"></i> {{ event.capacity }} cupos
+            </p>
+            <p>
+              <i class="pi pi-map-marker"></i> {{ event.room }}
+            </p>
+          </div>
+          <div class="card-actions">
+            <button class="btn-action" (click)="goToEvent(event.idEvents)">Ver más</button>
+            <span class="event-status-badge" [class.active]="event.status === 1" [class.inactive]="event.status === 0">
+              {{ getEventStatus(event) }}
+            </span>
+          </div>
+        </div>
+        </div>
+     </div>
+  </div>
+</div>
+
+<div class="content">
+  <div class="dashboard-grid">
+    <!-- Próximos Eventos -->
+    <div class="dashboard-card" *ngIf="upcomingEvents$ | async as upcomingEvents">
+      <div class="card-header">
+        <h2><i class="pi pi-calendar-plus"></i> Próximos Eventos</h2>
+      </div>
+      <div class="card-content">
+        <div class="upcoming-list" *ngIf="upcomingEvents.length > 0; else noUpcomingEvents">
+          <div class="upcoming-item" *ngFor="let event of upcomingEvents">
+            <div class="upcoming-image">
+              <img [src]="getEventImage(event)" [alt]="event.name">
+            </div>
+            <div class="upcoming-info">
+              <h3>{{ event.name }}</h3>
+              <p class="event-date">
+                <i class="pi pi-calendar"></i> {{ getFormattedDate(event.date) }}
+              </p>
+              <p class="event-time">
+                <i class="pi pi-clock"></i> {{ formatTime(event.time) }}
+              </p>
+              <p class="event-status">
+                <i class="pi pi-info-circle"></i> {{ getEventStatus(event) }}
+              </p>
+              <button class="btn-small" (click)="goToEvent(event.idEvents)">
+                Ver detalles
+              </button>
+            </div>
+          </div>
+        </div>
+        <ng-template #noUpcomingEvents>
+          <p class="no-data">No hay eventos próximos programados</p>
+        </ng-template>
+      </div>
+    </div>
+
+    <!-- Menú Destacado -->
+    <div class="dashboard-card" *ngIf="menuHighlights$ | async as menu">
+      <div class="card-header">
+        <h2><i class="pi pi-shopping-bag"></i> Menú Destacado</h2>
+      </div>
+      <div class="card-content">
+        <div class="menu-section">
+          <h3><i class="pi pi-apple"></i> Comidas</h3>
+          <div class="menu-items" *ngIf="menu.foods.length > 0; else noFoods">
+            <div class="menu-item" *ngFor="let food of menu.foods">
+              <div class="menu-item-image">
+                <img [src]="getFoodImage(food)" [alt]="food.description">
+              </div>
+              <div class="menu-item-info">
+                <h4>{{ food.description }}</h4>
+                <p class="menu-price">{{ formatPrice(food.price) }}</p>
+                <p class="menu-status">{{ getItemStatus(food) }}</p>
+              </div>
+            </div>
+          </div>
+          <ng-template #noFoods>
+            <p class="no-data">No hay comidas disponibles</p>
+          </ng-template>
+        </div>
+        
+        <div class="menu-section">
+          <h3><i class="pi pi-wine-glass"></i> Bebidas</h3>
+          <div class="menu-items" *ngIf="menu.drinks.length > 0; else noDrinks">
+            <div class="menu-item" *ngFor="let drink of menu.drinks">
+              <div class="menu-item-image">
+                <img [src]="getDrinkImage(drink)" [alt]="drink.description">
+              </div>
+              <div class="menu-item-info">
+                <h4>{{ drink.description }}</h4>
+                <p class="menu-price">{{ formatPrice(drink.price) }}</p>
+                <p class="menu-status">{{ getItemStatus(drink) }}</p>
+              </div>
+            </div>
+          </div>
+          <ng-template #noDrinks>
+            <p class="no-data">No hay bebidas disponibles</p>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+
+    <!-- Estadísticas del Sistema -->
+    <div class="dashboard-card" *ngIf="systemStatus$ | async as system">
+      <div class="card-header">
+        <h2><i class="pi pi-server"></i> Estado del Sistema</h2>
+      </div>
+      <div class="card-content">
+        <div class="system-status">
+          <div class="status-item">
+            <span class="status-label">Base de datos:</span>
+            <span class="status-value" [class.online]="system.database === 'online'" 
+                  [class.offline]="system.database === 'offline'">
+              {{ system.database === 'online' ? 'En línea' : 'Fuera de línea' }}
+            </span>
+          </div>
+          
+          <div class="services-list">
+            <h4>Servicios:</h4>
+            <div class="service-item" *ngFor="let service of system.services">
+              <span class="service-name">{{ service.name }}</span>
+              <span class="service-status" [class.up]="service.status === 'up'" 
+                    [class.down]="service.status === 'down'">
+                {{ service.status === 'up' ? 'Activo' : 'Inactivo' }}
+              </span>
+              <span class="service-latency">{{ service.latency }}ms</span>
+            </div>
+          </div>
+          
+          <div class="last-update">
+            <p><i class="pi pi-clock"></i> Actualizado: {{ system.timestamp | date:'dd/MM/yyyy HH:mm:ss' }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="zones">
+  <div class="zonesTitle">
+    <h1>Conoce nuestros espacios</h1>
+  </div>
+
+  <div class="zonesImages"  #zones>
+    <div class="bento-grid">
+      <div class="bento-item bento-vertical">
+        <img src="../../../assets/img/zona3.jpg" alt="Imagen 1" />
+          <div class="bento-overlay">Bar</div>
+      </div>
+      <div class="bento-item bento-top-right">
+        <img src="../../../assets/img/zona1.jpg" alt="Imagen 2" />
+          <div class="bento-overlay">Lobby</div>
+      </div>
+      <div class="bento-item bento-bottom-right">
+        <img src="../../../assets/img/zona2.jpg" alt="Imagen 3" />
+          <div class="bento-overlay">Barra</div>
+      </div>
+      
+      <!-- bottom full-width row inside the bento grid with two images side-by-side -->
+      <div class="bento-bottom-row">
+        <div class="pair-item-small">
+          <img src="../../../assets/img/sillas1.jpg" alt="Imagen abajo 1" />
+          <div class="bento-overlay">Sala</div>
+        </div>
+        <div class="pair-item-small">
+          <img src="../../../assets/img/sillas2.jpg" alt="Imagen abajo 2" />
+          <div class="bento-overlay">Terraza</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- <div class="imageGrid"  #zones2>
+      <div class="imageItem">
+        <img src="../../../assets/img/sillas2.jpg" alt="Imagen 1" />
+        <div class="overlay">Lobby</div>
+      </div>
+      <div class="imageItem">
+        <img src="../../../assets/img/sillas1.jpg" alt="Imagen 2" />
+        <div class="overlay">Barra</div>
+      </div>
+      <div class="imageItem">
+        <img src="../../../assets/img/jordan.jpg" alt="Imagen 3" />
+        <div class="overlay">Bar</div>
+      </div>
+      <div class="imageItem">
+        <img src="../../../assets/img/chicago.jpg" alt="Imagen 4" />
+        <div class="overlay">Terraza</div>
+      </div>
+    </div> -->
+</div>
+
+
