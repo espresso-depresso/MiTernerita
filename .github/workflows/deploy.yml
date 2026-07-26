@@ -38,7 +38,7 @@ jobs:
         run: pnpm install
 
       - name: Build Angular App
-        run: pnpm run build --base-href /MiTernerita/
+        run: pnpm exec ng build --base-href /MiTernerita/
 
       - name: Copy index.html to 404.html (Routing Fix)
         run: cp dist/miternerita-front/browser/index.html dist/miternerita-front/browser/404.html
