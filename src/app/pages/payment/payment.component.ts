@@ -38,6 +38,7 @@ export class PaymentComponent implements OnInit {
   totalBs!: number;
   paymentData: any;
   tasaDolar!: number;
+  totalUsd!: number;
   idTicket!: number;
   cantidad!: number;
   zelle!: "Zelle";
@@ -72,7 +73,7 @@ export class PaymentComponent implements OnInit {
     console.log("paymentData", this.paymentData)
     if(this.paymentData){
       this.total = this.paymentData.total;
-      //arrays
+      this.totalUsd = this.total;
       this.idTicket = this.paymentData.ticket.map((t: any) => t.id).join(',');
       this.cantidad = this.paymentData.ticket.map((t: any) => t.cantidad).join(',');
       console.log("idTicket:", this.idTicket);
@@ -81,10 +82,9 @@ export class PaymentComponent implements OnInit {
     
     this.settingsService.getSettings().subscribe({
       next: (settings: any) => {
-        console.log('Settings obtenidos:', settings);
-        // this.totalBs = this.total * settings.Dolar;
-        this.totalBs = 30;
-        this.tasaDolar = settings.Dolar;
+        const tasa = Number(settings?.tasaDolar ?? settings?.Dolar ?? 0);
+        this.tasaDolar = Number.isFinite(tasa) && tasa > 0 ? tasa : 1;
+        this.totalBs = Number((this.totalUsd * this.tasaDolar).toFixed(2));
       }
     });
   }
@@ -171,9 +171,9 @@ export class PaymentComponent implements OnInit {
     // Asegurar campos críticos desde el componente
     fd.set('idUser', String(this.idUser ?? fv.idUser ?? ''));
     fd.set('idEvents', String(this.idEvents ?? fv.idEvents ?? ''));
-    fd.set('totalGeneral', String(fv.totalGeneral ?? this.total ?? ''));
-    fd.set('tasaDolar', String(fv.tasaDolar ?? this.tasaDolar ?? ''));
-    fd.set('montoDolar', String(fv.montoDolar ?? this.total ?? ''));
+    fd.set('totalGeneral', String(this.totalBs));
+    fd.set('tasaDolar', String(this.tasaDolar ?? ''));
+    fd.set('montoDolar', String(this.totalUsd ?? this.total ?? ''));
 
     // Debug: listar pares enviados
     for (const pair of fd.entries()) {

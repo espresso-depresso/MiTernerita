@@ -1,0 +1,24 @@
+<div class="purchases-container">
+  <h2>Mis compras</h2>
+
+  <div class="empty-state" *ngIf="!purchases.length">
+    <p>Aún no tienes compras registradas.</p>
+  </div>
+
+  <div class="purchase-list" *ngIf="purchases.length">
+    <div class="purchase-card" *ngFor="let purchase of purchases">
+      <div class="purchase-header">
+        <h3>{{ purchase.idEvents?.name || 'Evento' }}</h3>
+        <span class="status" [class.approved]="purchase.status === 'Aprobado'" [class.pending]="purchase.status === 'Pendiente'" [class.rejected]="purchase.status === 'Rechazado'">{{ purchase.status }}</span>
+      </div>
+
+      <p><strong>Fecha:</strong> {{ purchase.date }}</p>
+      <p><strong>Total:</strong> {{ purchase.montoDolar | currency:'USD':'symbol':'1.2-2' }} / {{ purchase.totalGeneral | number:'1.2-2' }} Bs</p>
+      <p><strong>Referencia:</strong> {{ purchase.referencia || 'N/A' }}</p>
+
+      <div class="comprobante" *ngIf="purchase.comprobante">
+        <img [src]="purchase.comprobante" alt="Comprobante de pago" />
+      </div>
+    </div>
+  </div>
+</div>

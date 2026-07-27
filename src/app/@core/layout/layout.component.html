@@ -13,7 +13,7 @@
         
         <div class="auth">
             <a routerLink="/admin/dashboard" *ngIf="user?.role === 'admin'">Dashboard</a>
-            <a href="#" *ngIf="user">Mis Compras</a>
+            <a routerLink="/mis-compras" *ngIf="user">Mis Compras</a>
             
             <!-- Botones de Login y Register solo cuando no está autenticado -->
             <div class="auth-buttons" *ngIf="!user">

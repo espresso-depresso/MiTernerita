@@ -74,6 +74,11 @@ export const routes: Routes = [
             path: 'home/event/:id/ticket/checkout/payment',
             loadComponent: () => import('./pages/payment/payment.component').then(m => m.PaymentComponent),
             title: 'Payment'
+        },
+        {
+            path: 'mis-compras',
+            loadComponent: () => import('./pages/purchases/purchases.component').then(m => m.PurchasesComponent),
+            title: 'Mis Compras'
         }
     ],
 

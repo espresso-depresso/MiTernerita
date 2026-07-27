@@ -63,11 +63,15 @@
             <p-select [options]="status"  optionLabel="label" optionValue="value" formControlName="status"  appendTo="body"/>
         </div>
 
-        <div class="image">
+        <div class="image" *ngIf="comprobanteUrl">
             <img
-                [src]=" (apiImg + '/img/' + (payment.comprobante || payment.imagen))"
+                [src]="comprobanteUrl"
                 alt="Vista previa"
                 class="preview" />
+        </div>
+
+        <div class="image" *ngIf="!comprobanteUrl">
+            <p>No hay comprobante adjunto.</p>
         </div>
 
         <div class="btnContainer">

@@ -45,6 +45,7 @@ export class UpdatePaymentComponent implements OnInit{
   tasaDolar!: number
   noDocumento!: string;
   idPayment!: number;
+  comprobanteUrl: string | null = null;
   
 
    status = [
@@ -72,7 +73,8 @@ export class UpdatePaymentComponent implements OnInit{
     this.banco = this.payment.banco;
     this.referencia = this.payment.referencia;
     this.noDocumento = this.payment.noDocumento;
-    this.idPayment = this.payment.idPayment;
+    this.idPayment = this.payment.idPayment ?? this.payment.idPayments;
+    this.comprobanteUrl = this.getComprobanteUrl(this.payment.comprobante);
 
     this.updatePaymentForm.patchValue(this.payment);
   }
@@ -90,5 +92,14 @@ export class UpdatePaymentComponent implements OnInit{
         this.messageService.add({severity:'error', summary: 'Error', detail: 'Failed to update payment'});
       }
     });
+  }
+
+  private getComprobanteUrl(comprobante: any): string | null {
+    if (!comprobante) return null;
+    if (typeof comprobante === 'string') {
+      if (comprobante.startsWith('data:image')) return comprobante;
+      return `${this.apiImg}/${String(comprobante).replace(/^\/+/, '')}`;
+    }
+    return null;
   }
 }
