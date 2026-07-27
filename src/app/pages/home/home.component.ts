@@ -138,23 +138,23 @@ private loadAdditionalData(): void {
     if (event.image1) return this.getFullUrl(event.image1);
     if (event.image2) return this.getFullUrl(event.image2);
     if (event.image3) return this.getFullUrl(event.image3);
-    return '../../../assets/img/default-event.jpg';
+    return './assets/img/evento.jpg';
   }
 
   getFoodImage(food: Food): string {
     // Simular una URL de imagen para comida
-    return food.description.toLowerCase().includes('hamburguesa') ? '../../../assets/img/hamburguesa.jpg' :
-           food.description.toLowerCase().includes('pizza') ? '../../../assets/img/pizza.jpg' :
-           food.description.toLowerCase().includes('ensalada') ? '../../../assets/img/ensalada.jpg' :
-           '../../../assets/img/default-food.jpg';
+    return food.description.toLowerCase().includes('hamburguesa') ? './assets/img/hamburguesa.jpeg' :
+           food.description.toLowerCase().includes('pizza') ? './assets/img/pizza.jpeg' :
+           food.description.toLowerCase().includes('ensalada') ? './assets/img/ensalada.jpeg' :
+           './assets/img/fingers.jpg';
   }
 
   getDrinkImage(drink: Drink): string {
     // Simular una URL de imagen para bebida
-    return drink.description.toLowerCase().includes('cerveza') ? '../../../assets/img/cerveza.jpg' :
-           drink.description.toLowerCase().includes('margarita') ? '../../../assets/img/margarita.jpg' :
-           drink.description.toLowerCase().includes('refresco') ? '../../../assets/img/refresco.jpg' :
-           '../../../assets/img/default-drink.jpg';
+    return drink.description.toLowerCase().includes('cerveza') ? './assets/img/cerveza.jpeg' :
+           drink.description.toLowerCase().includes('margarita') ? './assets/img/margarita.jpeg' :
+           drink.description.toLowerCase().includes('refresco') ? './assets/img/refresco.jpeg' :
+           './assets/img/ron1.png';
   }
 
   getEventStatus(event: Event): string {
