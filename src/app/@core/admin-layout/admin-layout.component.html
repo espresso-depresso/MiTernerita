@@ -3,13 +3,12 @@
     <div class="logo">
       <i class="pi pi-bars menu-icon" (click)="openSidebar(nav)"></i>
       <div class="logoImg">
-        <img src="../../../assets/img/logo.png" alt="Logo">
+        <img src="./assets/img/logo.png" alt="Logo">
         <span class="logo-name">Mi Ternerita House</span>
       </div>
     </div>
 
     <div class="sidebar">
-      <!-- Header del Sidebar con botón de cerrar estilizado -->
       <div class="sidebar-header">
         <i class="pi pi-times menu-icon-close" (click)="closeSidebar(nav)"></i>
       </div>
@@ -21,7 +20,6 @@
       </div>
 
       <div class="sidebar-content">
-        <!-- Lista con scroll automático si hay muchos elementos -->
         <ul class="lists">
           @for (route of routes; track route.name) {
             <li class="list" (click)="closeSidebar(nav)">
@@ -33,7 +31,6 @@
           }
         </ul>
 
-        <!-- Acciones en la parte inferior siempre visibles -->
         <div class="bottom-content">
           <li class="list">
             <a href="./admin/settings" class="nav-link">

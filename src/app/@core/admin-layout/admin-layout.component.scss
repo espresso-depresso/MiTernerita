@@ -65,13 +65,13 @@ nav{
 .logo .menu-icon-close:hover{
     opacity: 0.9;
 }
-/* --- Sidebar Base --- */
+
 nav .sidebar {
   position: fixed;
   top: 0;
   left: -100%;
   height: 100vh;
-  width: 280px; /* Un ancho ligeramente más amplio para mejor legibilidad */
+  width: 280px;
   padding: 0;
   background-color: #181a1f;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
@@ -85,7 +85,6 @@ nav.open .sidebar {
   left: 0;
 }
 
-/* Header interno del Sidebar */
 .sidebar-header {
   display: flex;
   justify-content: flex-end;
@@ -103,7 +102,6 @@ nav.open .sidebar {
   color: #ffffff;
 }
 
-/* Usuario */
 .sidebar-user {
   display: flex;
   flex-direction: column;
@@ -116,7 +114,7 @@ nav.open .sidebar {
 
 .sidebar-user .icon {
   font-size: 42px;
-  color: #1d4ed8;
+  color: #ffff;
 }
 
 .sidebar-user .username {
@@ -131,21 +129,18 @@ nav.open .sidebar {
   letter-spacing: 0.5px;
 }
 
-/* Contenido / Flexbox para empujar la parte inferior */
 .sidebar .sidebar-content {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   flex: 1;
   padding: 16px 12px;
-  overflow: hidden; /* Evita que todo el panel rompa el layout */
+  overflow: hidden; 
 }
 
-/* Lista principal de navegación */
 .lists {
   margin: 0;
   padding: 0;
-  overflow-y: auto; /* Permite scroll solo en el menú si la pantalla es muy pequeña */
   flex: 1;
 }
 
@@ -184,7 +179,6 @@ nav.open .sidebar {
   color: #ffffff;
 }
 
-/* Sección inferior pinned (Configuración + Logout) */
 .bottom-content {
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   padding-top: 12px;
@@ -196,7 +190,7 @@ nav.open .sidebar {
 }
 
 .logout:hover {
-  background-color: #dc2626; /* Color rojo de advertencia para el logout */
+  background-color: #dc2626; 
 }
 
 .logout:hover .icon,
