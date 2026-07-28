@@ -65,102 +65,144 @@ nav{
 .logo .menu-icon-close:hover{
     opacity: 0.9;
 }
-
-nav .sidebar{
-  position: fixed;
-  top: 0;
-  left: -100%;
-  height: 100%;
-  width: 260px;
-  padding:  0;
-  background-color: #181A1F;
-  box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-  transition: all 0.4s ease;
-}
-nav.open .sidebar{
-  left: 0;
-}
-
-.sidebar-user{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 30px 16px;
-    gap: 10px;
-    color: white;
-}
-
-.sidebar-user hr{
-    width: 50%;
-}
-
-.sidebar-user .icon{
-    font-size: 50px;
-    color: white;
-}
-
-.sidebar .sidebar-content{
-  display: flex;
-  height: 80%;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 30px 16px;
-}
-.lists{
-  margin: 0;
-  padding: 0px;
-}
-.sidebar-content .list {
- list-style: none;
-}
-.list .nav-link{
-  display: flex;
-  align-items: center;
-  padding: 14px 12px;
-  border-radius: 8px;
-
-  text-decoration: none;
-}
-.nav-link:hover{
-  background-color:#1D4ED8;
-}
-.nav-link .icon{
-  margin-right: 14px;
-  font-size: 20px;
-  color: #707070;
-}
-.nav-link .link{
-  font-size: 16px;
-  color: white;
-  font-weight: 400;
-}
-.nav-link:hover .icon,
-.nav-link:hover .link{
-  color: #fff;
-}
-.overlay{
+/* --- Sidebar Base --- */
+nav .sidebar {
   position: fixed;
   top: 0;
   left: -100%;
   height: 100vh;
-  width: 200%;
-  opacity: 0;
-  background: rgba(0, 0, 0, 0.3);
-  transition: all 0.4s ease;
-  pointer-events: none;
+  width: 280px; /* Un ancho ligeramente más amplio para mejor legibilidad */
+  padding: 0;
+  background-color: #181a1f;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  z-index: 1001;
 }
 
-nav.open ~ .overlay{
-  pointer-events: auto;
-  opacity: 1;
-  left: 260px;
+nav.open .sidebar {
+  left: 0;
 }
 
-.logout{
+/* Header interno del Sidebar */
+.sidebar-header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 12px 16px;
+}
+
+.menu-icon-close {
+  color: #a0aec0;
+  font-size: 22px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.menu-icon-close:hover {
+  color: #ffffff;
+}
+
+/* Usuario */
+.sidebar-user {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 16px 20px 16px;
+  gap: 6px;
+  color: white;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sidebar-user .icon {
+  font-size: 42px;
+  color: #1d4ed8;
+}
+
+.sidebar-user .username {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.sidebar-user .role {
+  font-size: 12px;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Contenido / Flexbox para empujar la parte inferior */
+.sidebar .sidebar-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+  padding: 16px 12px;
+  overflow: hidden; /* Evita que todo el panel rompa el layout */
+}
+
+/* Lista principal de navegación */
+.lists {
+  margin: 0;
+  padding: 0;
+  overflow-y: auto; /* Permite scroll solo en el menú si la pantalla es muy pequeña */
+  flex: 1;
+}
+
+.sidebar-content .list {
+  list-style: none;
+  margin-bottom: 4px;
+}
+
+.list .nav-link {
+  display: flex;
+  align-items: center;
+  padding: 10px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-link:hover {
+  background-color: #1d4ed8;
+}
+
+.nav-link .icon {
+  margin-right: 12px;
+  font-size: 18px;
+  color: #9ca3af;
+}
+
+.nav-link .link {
+  font-size: 14px;
+  color: #e5e7eb;
+  font-weight: 500;
+}
+
+.nav-link:hover .icon,
+.nav-link:hover .link {
+  color: #ffffff;
+}
+
+/* Sección inferior pinned (Configuración + Logout) */
+.bottom-content {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 12px;
+  margin-top: 8px;
+}
+
+.logout {
   cursor: pointer;
 }
 
+.logout:hover {
+  background-color: #dc2626; /* Color rojo de advertencia para el logout */
+}
+
+.logout:hover .icon,
+.logout:hover .link {
+  color: #ffffff;
+}
 .content{
       flex: 1 0 auto;
       margin-top: 5vh;
