@@ -3,7 +3,6 @@
         <div class="items">
             <a href="#">Inicio</a>
             <a (click)="goToEvents()">Eventos</a>
-            <a href="#">Contacto</a>
         </div>
         
         <div class="navLogo">
@@ -45,10 +44,8 @@
 
             <div class="mobile-menu" *ngIf="showMobileMenu" [class.open]="showMobileMenu">
                 <a href="#">Inicio</a>
-                <a href="#">Eventos</a>
-                <a href="#">Contacto</a>
+                <a (click)="goToEvents()">Eventos</a>
                 <a routerLink="/admin/dashboard">Dashboard</a>
-                <a href="">Christopher Medina</a>
             </div>
         </div>
     </nav>
